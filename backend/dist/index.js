@@ -1,41 +1,15 @@
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
-const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Article" type defines the queryable fields for every article in our data source.
-  type Article {
-    title: String
-    author: String
-  }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "article" query returns an array of zero or more Article (defined above).
-  type Query {
-    article: [Article]
-  }
-`;
-const article = [
-    {
-        title: "The Awakening",
-        author: "Kate Chopin",
-    },
-    {
-        title: "City of Glass",
-        author: "Paul Auster",
-    },
-];
-const resolvers = {
-    Query: {
-        article: () => article,
-    },
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const apollo_server_express_1 = require("apollo-server-express");
+const schema_1 = require("./schema");
+const app = (0, express_1.default)();
+const PORT = 3000;
+const server = new apollo_server_express_1.ApolloServer({ typeDefs: schema_1.typeDefs, resolvers: schema_1.resolvers });
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`GraphQL Playground available at http://localhost:${PORT}${server.graphqlPath}`);
 });
-const { url } = await startStandaloneServer(server, {
-    listen: { port: 4000 },
-});
-console.log(`🚀  Server ready at: ${url}`);
