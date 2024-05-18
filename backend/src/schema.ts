@@ -2,12 +2,12 @@ import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
   type Query {
-    hello: String
+    user: String
   }
 `;
 
 export const resolvers = {
   Query: {
-    hello: () => "Hello, GraphQL with Apollo!",
+    hello: () => "Hello!",
   },
 };
