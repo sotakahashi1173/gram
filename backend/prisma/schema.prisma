@@ -14,29 +14,23 @@ datasource db {
 }
 
 model Post {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  slug     String    @unique
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String  @unique
   title    String
   body     String
-  authorId String    @db.ObjectId
-  comments Comment[]
+  authorId String  @db.ObjectId
   Photo    Photo[]
 }
 
 model User {
-  id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  email   String    @unique
-  name    String?
-  Comment Comment[]
-  Photo   Photo[]
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  name String?
 }
 
 model Comment {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   comment String
-  post    Post   @relation(fields: [postId], references: [id])
   postId  String @db.ObjectId
-  user    User   @relation(fields: [userId], references: [id])
   userId  String @db.ObjectId
 }
 
@@ -45,6 +39,5 @@ model Photo {
   url    String
   postId String  @db.ObjectId
   post   Post    @relation(fields: [postId], references: [id])
-  User   User?   @relation(fields: [userId], references: [id])
   userId String? @db.ObjectId
 }
