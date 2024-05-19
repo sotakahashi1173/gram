@@ -8,7 +8,7 @@ export interface User {
   name: string;
 }
 
-interface UserInput {
+export interface UserInput {
   id: string;
   name: string;
 }
