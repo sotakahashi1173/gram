@@ -24,3 +24,7 @@ export const getByUserId =
           clientVersion: "",
         })
     ).andThen((user) => (user ? User(user) : ok(null)));
+
+export const saveUser =
+  ({ prisma }: Context) =>
+  (model: CreateUserID) => {};
