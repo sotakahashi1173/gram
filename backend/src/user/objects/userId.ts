@@ -1,21 +1,18 @@
-import { Result, ok, err } from "neverthrow";
-import { ValidationError } from "apollo-server-express";
+import { Result, err, ok } from "neverthrow";
+import { createId } from "../../common/uuid";
 
-export type UserId = string;
+export type UserId = newtype<"UserId", string>;
 
-/**
- * ユーザーIDオブジェクト
- */
-export function UserId(value: string): Result<UserId, ValidationError> {
-  return validate(value)
-    ? ok(value as UserId)
-    : err(new ValidationError("Invalid user ID"));
-}
+declare const __newtype: unique symbol;
 
-/**
- * ユーザーIDのバリデーション
- * ユーザーIDが4文字以上10文字以下であればtrueを返す
- */
-const validate = (value: string): boolean => {
-  return value.length >= 4 && value.length <= 10;
+export type newtype<Constructor, Type> = Type & {
+  readonly [__newtype]: Constructor;
 };
+
+/**
+ * ユーザーID 値オブジェクト
+ */
+export function UserId(value?: string): Result<UserId, Error> {
+  const userId = value || createId();
+  return ok(userId as UserId) || err(new Error("Failed"));
+}
