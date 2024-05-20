@@ -1,12 +1,34 @@
 import { Result, err, ok } from "neverthrow";
 import { UserId } from "./userId";
 import { ValidationError } from "apollo-server-express";
+import { UserName } from "./name";
 
-// ブログのユーザー情報を定義する
-export interface User {
+/**
+ * 未バリデーションユーザー
+ */
+export interface UnvalidatedUser {
+  kind: "Unvalidated";
+  name: string;
+}
+
+/**
+ * バリデーション済みユーザー
+ */
+export interface ValidatedUser {
+  kind: "Validated";
+  name: UserName;
+}
+
+/**
+ * 作成ユーザー
+ */
+export interface CreatedUser {
+  kind: "Created";
   id: UserId;
   name: string;
 }
+
+export type User = UnvalidatedUser | ValidatedUser | CreatedUser;
 
 export interface UserInput {
   id: string;
@@ -16,13 +38,12 @@ export interface UserInput {
 export const User = (
   userInput: UserInput
 ): Result<User, ValidationError | Error> => {
-  const userId = UserId(userInput.id);
-  const name = userInput.id
-    ? ok(userInput.name as string)
-    : err(new Error("Invalid name"));
-  const values = Result.combine(tuple(userId, name));
+  const id = UserId(userInput.id);
+  const name = UserName(userInput.name);
+  const values = Result.combine(tuple(id, name));
   return values.map(([id, name]) => ({
     ...userInput,
+    kind: "Created",
     id,
     name,
   }));

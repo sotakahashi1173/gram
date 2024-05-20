@@ -1,10 +1,19 @@
 import { Result, ok, err } from "neverthrow";
 import { ValidationError } from "apollo-server-express";
 
-export type UserId = string;
+/**
+ * ユーザーID 値オブジェクト
+ */
+export type UserId = newtype<"UserId", string>;
+
+declare const __newtype: unique symbol;
+
+export type newtype<Constructor, Type> = Type & {
+  readonly [__newtype]: Constructor;
+};
 
 /**
- * ユーザーIDオブジェクト
+ * ユーザーIDオブジェクト生成関数
  */
 export function UserId(value: string): Result<UserId, ValidationError> {
   return validate(value)
