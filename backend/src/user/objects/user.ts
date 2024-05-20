@@ -1,7 +1,8 @@
-import { Result, err, ok } from "neverthrow";
+import { Result, ok } from "neverthrow";
 import { UserId } from "./userId";
 import { ValidationError } from "apollo-server-express";
 import { UserName } from "./name";
+import { tuple } from "../../common/tuple";
 
 /**
  * 未バリデーションユーザー
@@ -38,9 +39,9 @@ export interface UserInput {
 export const User = (
   userInput: UserInput
 ): Result<User, ValidationError | Error> => {
-  const id = UserId(userInput.id);
+  const userId = UserId(userInput.id);
   const name = UserName(userInput.name);
-  const values = Result.combine(tuple(id, name));
+  const values = Result.combine(tuple(userId, name));
   return values.map(([id, name]) => ({
     ...userInput,
     kind: "Created",
@@ -48,8 +49,3 @@ export const User = (
     name,
   }));
 };
-
-// TODO: commonに書き出す
-function tuple<T extends any[]>(...args: T) {
-  return args;
-}
