@@ -1,25 +1,35 @@
 import { Result, ok } from "neverthrow";
 import { UserId } from "./userId";
 import { ValidationError } from "apollo-server-express";
-import { tuple } from "../../common/tuple";
 import { UserName } from "./name";
+import { tuple } from "../../common/tuple";
 
+/**
+ * 未バリデーションユーザー
+ */
 export interface UnvalidatedUser {
   kind: "Unvalidated";
   name: string;
 }
 
+/**
+ * バリデーション済みユーザー
+ */
 export interface ValidatedUser {
   kind: "Validated";
   name: UserName;
 }
 
-export interface CreatedUserId {
+/**
+ * 作成ユーザー
+ */
+export interface CreatedUser {
+  kind: "Created";
   id: UserId;
-  name: UserName;
+  name: string;
 }
 
-export type User = UnvalidatedUser | ValidatedUser | CreatedUserId;
+export type User = UnvalidatedUser | ValidatedUser | CreatedUser;
 
 export interface UserInput {
   id: string;
@@ -34,6 +44,7 @@ export const User = (
   const values = Result.combine(tuple(userId, name));
   return values.map(([id, name]) => ({
     ...userInput,
+    kind: "Created",
     id,
     name,
   }));

@@ -3,7 +3,7 @@ import { Context } from "../../schema";
 import { UserId } from "../objects/userId";
 import { ValidationError } from "apollo-server-express";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { User } from "../objects/user";
+import { CreatedUser, User } from "../objects/user";
 
 export const getByUserId =
   ({ prisma }: Context) =>
@@ -27,4 +27,4 @@ export const getByUserId =
 
 export const saveUser =
   ({ prisma }: Context) =>
-  (model: CreateUserID) => {};
+  (model: CreatedUser) => {};

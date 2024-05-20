@@ -1,10 +1,13 @@
 import { Result, ok, err } from "neverthrow";
 import { ValidationError } from "apollo-server-express";
 
+/**
+ * ユーザー名
+ */
 export type UserName = string;
 
 /**
- * ユーザー名オブジェクト
+ * ユーザー名オブジェクト生成関数
  */
 export function UserName(value: string): Result<UserName, ValidationError> {
   return validate(value)
