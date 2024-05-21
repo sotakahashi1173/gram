@@ -1,8 +1,13 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { DefaultArgs } from "@prisma/client/runtime/library";
+import SchemaBuilder from "@pothos/core";
+import PrismaPlugin from "@pothos/plugin-prisma";
+import { Context } from "./context";
+import { prisma } from "./infra/documentDB";
 
-export type Context = {
-  prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>;
-};
-
-export const gameSchema = (builder: builder) => {};
+export const builder = new SchemaBuilder<{
+  Context: Context;
+}>({
+  plugins: [PrismaPlugin],
+  prisma: {
+    client: prisma,
+  },
+});

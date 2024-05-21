@@ -8,6 +8,9 @@ dependencies:
   '@pothos/core':
     specifier: ^3.41.1
     version: 3.41.1(graphql@16.8.1)
+  '@pothos/plugin-prisma':
+    specifier: ^3.65.1
+    version: 3.65.1(@pothos/core@3.41.1)(@prisma/client@5.14.0)(graphql@16.8.1)(typescript@5.4.5)
   '@pothos/plugin-relay':
     specifier: ^3.46.0
     version: 3.46.0(@pothos/core@3.41.1)(graphql@16.8.1)
@@ -388,6 +391,22 @@ packages:
       graphql: 16.8.1
     dev: false
 
+  /@pothos/plugin-prisma@3.65.1(@pothos/core@3.41.1)(@prisma/client@5.14.0)(graphql@16.8.1)(typescript@5.4.5):
+    resolution: {integrity: sha512-tWLdSp/Mjhw8OHEdjlDS7OEMt0x7A0SZzIcpcf4V/QJm/97EV8ssMt9Pz9PrrxjvYWfK6ZezIUYgN8CpD9HVPA==}
+    hasBin: true
+    peerDependencies:
+      '@pothos/core': '*'
+      '@prisma/client': '*'
+      graphql: '>=15.1.0'
+      typescript: '>=4.7.2'
+    dependencies:
+      '@pothos/core': 3.41.1(graphql@16.8.1)
+      '@prisma/client': 5.14.0(prisma@5.14.0)
+      '@prisma/generator-helper': 5.14.0
+      graphql: 16.8.1
+      typescript: 5.4.5
+    dev: false
+
   /@pothos/plugin-relay@3.46.0(@pothos/core@3.41.1)(graphql@16.8.1):
     resolution: {integrity: sha512-EOmyqAsMy/vWgitPWcQRDUvLBcZF5M/RrFxoFeI/VWnRpUJPr8XmHh28jb70G8Wzfg56btPpTY440doSKb60og==}
     peerDependencies:
@@ -432,6 +451,12 @@ packages:
       '@prisma/debug': 5.14.0
       '@prisma/engines-version': 5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48
       '@prisma/get-platform': 5.14.0
+
+  /@prisma/generator-helper@5.14.0:
+    resolution: {integrity: sha512-xVc71cmTnPZ0lnSs4FAY6Ta72vFJ3webrQwKMQ2ujr6hDG1VPIEf820T1TOS3ZZQd/OKigNKXnq3co8biz9/qw==}
+    dependencies:
+      '@prisma/debug': 5.14.0
+    dev: false
 
   /@prisma/get-platform@5.14.0:
     resolution: {integrity: sha512-/yAyBvcEjRv41ynZrhdrPtHgk47xLRRq/o5eWGcUpBJ1YrUZTYB8EoPiopnP7iQrMATK8stXQdPOoVlrzuTQZw==}
@@ -2080,7 +2105,6 @@ packages:
     resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
