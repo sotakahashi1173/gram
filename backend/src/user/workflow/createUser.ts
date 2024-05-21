@@ -15,7 +15,7 @@ type Workflow = (
 ) => Result<User, Error | ValidationError | PrismaClientKnownRequestError>;
 
 export const createUserWorkflow: Workflow = (model) =>
-  ok(model).andThen(validateUser);
+  ok(model).andThen(validateUser).andThen(createUser);
 
 type ValidateUser = (
   model: UnvalidatedUser
@@ -29,6 +29,8 @@ const validateUser: ValidateUser = (model) => {
     name,
   }));
 };
+
+// TODO: IdentifyUserを作成する
 
 /**
  * ユーザー作成関数

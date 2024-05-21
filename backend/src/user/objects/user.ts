@@ -3,12 +3,14 @@ import { UserId } from "./userId";
 import { ValidationError } from "apollo-server-express";
 import { UserName } from "./name";
 import { tuple } from "../../common/tuple";
+import { createId } from "../../common/uuid";
 
 /**
  * 未バリデーションユーザー
  */
 export interface UnvalidatedUser {
   kind: "Unvalidated";
+  id?: string;
   name: string;
 }
 
@@ -17,6 +19,7 @@ export interface UnvalidatedUser {
  */
 export interface ValidatedUser {
   kind: "Validated";
+  id?: string;
   name: UserName;
 }
 
@@ -29,22 +32,19 @@ export interface CreatedUser {
   name: string;
 }
 
-export type User = UnvalidatedUser | ValidatedUser | CreatedUser;
-
-export interface UserInput {
-  id: string;
-  name: string;
+export interface User {
+  id: UserId;
+  name: UserName;
 }
 
 export const User = (
-  userInput: UserInput
+  userInput: User
 ): Result<User, ValidationError | Error> => {
-  const userId = UserId(userInput.id);
+  const userId = userInput.id ? UserId(userInput.id) : UserId(createId());
   const name = UserName(userInput.name);
   const values = Result.combine(tuple(userId, name));
   return values.map(([id, name]) => ({
     ...userInput,
-    kind: "Created",
     id,
     name,
   }));
