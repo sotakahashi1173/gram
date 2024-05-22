@@ -5,6 +5,7 @@ import { prisma } from "./infra/documentDB";
 import { createUserWorkflow } from "./user/workflow/createUser";
 import { saveUser } from "./user/repos/userRepository";
 import { UnvalidatedUser } from "./user/objects/user";
+import { error } from "console";
 
 export const builder = new SchemaBuilder<{
   Context: Context;
@@ -34,10 +35,13 @@ builder.mutationField("createUser", (t) =>
         kind: "Unvalidated",
       } as UnvalidatedUser;
 
-      const reulst = createUserWorkflow(unvalidatedUser).andThen(
-        saveUser(context)(unvalidatedUser)
+      const reulst = createUserWorkflow(unvalidatedUser);
+      return reulst.match(
+        (user) => ({ name: user.name }),
+        (error) => {
+          throw new Error();
+        }
       );
-      return "";
     },
   })
 );
