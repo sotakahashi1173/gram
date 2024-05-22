@@ -9,6 +9,13 @@ generator client {
   output   = "./client"
 }
 
+generator pothos {
+  provider     = "prisma-pothos-types"
+  // Match client output location from above
+  clientOutput = "./client"
+  output       = "./generated.d.ts"
+}
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -41,11 +48,4 @@ model Photo {
   postId String  @db.ObjectId
   post   Post    @relation(fields: [postId], references: [id])
   userId String? @db.ObjectId
-}
-
-generator pothos {
-  provider     = "prisma-pothos-types"
-  // Match client output location from above
-  clientOutput = "./client"
-  output       = "./generated.d.ts"
 }

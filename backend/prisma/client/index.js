@@ -153,7 +153,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../.env",
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "..",
@@ -172,8 +172,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./client\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id       String  @id @default(auto()) @map(\"_id\") @db.ObjectId\n  slug     String  @unique\n  title    String\n  body     String\n  authorId String  @db.ObjectId\n  Photo    Photo[]\n}\n\nmodel User {\n  id   String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  name String\n}\n\nmodel Comment {\n  id      String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  comment String\n  postId  String @db.ObjectId\n  userId  String @db.ObjectId\n}\n\nmodel Photo {\n  id     String  @id @default(auto()) @map(\"_id\") @db.ObjectId\n  url    String\n  postId String  @db.ObjectId\n  post   Post    @relation(fields: [postId], references: [id])\n  userId String? @db.ObjectId\n}\n\ngenerator pothos {\n  provider     = \"prisma-pothos-types\"\n  // Match client output location from above\n  clientOutput = \"./client\"\n  output       = \"./generated.d.ts\"\n}\n",
-  "inlineSchemaHash": "d7abe4b08813ed33b8efcdc33f8ea88b70b1221a8721d10b2c39d15bd92cca4d",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./client\"\n}\n\ngenerator pothos {\n  provider     = \"prisma-pothos-types\"\n  // Match client output location from above\n  clientOutput = \"./client\"\n  output       = \"./generated.d.ts\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Post {\n  id       String  @id @default(auto()) @map(\"_id\") @db.ObjectId\n  slug     String  @unique\n  title    String\n  body     String\n  authorId String  @db.ObjectId\n  Photo    Photo[]\n}\n\nmodel User {\n  id   String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  name String\n}\n\nmodel Comment {\n  id      String @id @default(auto()) @map(\"_id\") @db.ObjectId\n  comment String\n  postId  String @db.ObjectId\n  userId  String @db.ObjectId\n}\n\nmodel Photo {\n  id     String  @id @default(auto()) @map(\"_id\") @db.ObjectId\n  url    String\n  postId String  @db.ObjectId\n  post   Post    @relation(fields: [postId], references: [id])\n  userId String? @db.ObjectId\n}\n",
+  "inlineSchemaHash": "860ce19ce28e9265b1396bcbff0e4e09fdf0a50c96a623de94682ed2be8fc208",
   "copyEngine": true
 }
 
