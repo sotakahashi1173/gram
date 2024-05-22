@@ -5,9 +5,18 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "./client"
+   provider     = "prisma-client-js"
+   output   = "./client"
+ }
+
+generator pothos {
+  provider     = "prisma-pothos-types"
+  // Match client output location from above
+  clientOutput = "./client"
+  output       = "./generated.d.ts"
 }
+
+
 
 datasource db {
   provider = "mongodb"
@@ -42,10 +51,3 @@ model Photo {
   post   Post    @relation(fields: [postId], references: [id])
   userId String? @db.ObjectId
 }
-
-generator pothos {
-   provider     = "prisma-pothos-types"
-   // Match client output location from above
-   clientOutput = "./client"
-   output       = "./generated.d.ts"
- }
