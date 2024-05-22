@@ -25,6 +25,19 @@ export const getByUserId =
         })
     ).andThen((user) => (user ? User(user) : ok(null)));
 
+interface UserData {
+  id: string;
+  name: string;
+}
+
 export const saveUser =
   ({ prisma }: Context) =>
-  (model: CreatedUser) => {};
+  (model: CreatedUser): ResultAsync<UserData, Error> => {
+    const { kind, ...user } = model;
+    return ResultAsync.fromPromise(
+      prisma.user.create({
+        data: { ...user },
+      }),
+      () => new Error("Failed to save user.")
+    );
+  };
