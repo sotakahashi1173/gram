@@ -32,8 +32,8 @@ interface UserData {
 
 export const saveUser =
   ({ prisma }: Context) =>
-  (model: CreatedUser): ResultAsync<UserData, Error> => {
-    const { kind, ...user } = model;
+  (model: User): ResultAsync<UserData, Error> => {
+    const { ...user } = model;
     return ResultAsync.fromPromise(
       prisma.user.create({
         data: { ...user },
