@@ -32,19 +32,31 @@ export interface CreatedUser {
   name: string;
 }
 
-export interface User {
+/**
+ * 作成済みユーザー
+ */
+export interface SavedUser {
+  kind: "Saved";
   id: UserId;
-  name: UserName;
+  name: string;
+}
+
+export type User = UnvalidatedUser | ValidatedUser | CreatedUser | SavedUser;
+
+export interface UserData {
+  id: string;
+  name: string;
 }
 
 export const User = (
-  userInput: User
+  userData: UserData
 ): Result<User, ValidationError | Error> => {
-  const userId = userInput.id ? UserId(userInput.id) : UserId(createId());
-  const name = UserName(userInput.name);
+  const userId = userData.id ? UserId(userData.id) : UserId(createId());
+  const name = UserName(userData.name);
   const values = Result.combine(tuple(userId, name));
   return values.map(([id, name]) => ({
-    ...userInput,
+    ...userData,
+    kind: "Saved",
     id,
     name,
   }));
