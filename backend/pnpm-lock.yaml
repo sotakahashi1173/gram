@@ -14,12 +14,12 @@ dependencies:
   '@pothos/plugin-relay':
     specifier: ^3.46.0
     version: 3.46.0(@pothos/core@3.41.1)(graphql@16.8.1)
+  '@pothos/plugin-simple-objects':
+    specifier: ^3.7.0
+    version: 3.7.0(@pothos/core@3.41.1)(graphql@16.8.1)
   '@prisma/client':
     specifier: ^5.14.0
     version: 5.14.0(prisma@5.14.0)
-  '@types/uuid':
-    specifier: ^9.0.8
-    version: 9.0.8
   apollo-server-express:
     specifier: ^3.13.0
     version: 3.13.0(express@4.19.2)(graphql@16.8.1)
@@ -32,6 +32,9 @@ dependencies:
   neverthrow:
     specifier: ^6.2.1
     version: 6.2.1
+  uuid:
+    specifier: ^9.0.1
+    version: 9.0.1
 
 devDependencies:
   '@types/express':
@@ -43,6 +46,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.12.12
     version: 20.12.12
+  '@types/uuid':
+    specifier: ^9.0.8
+    version: 9.0.8
   eslint-plugin-neverthrow:
     specifier: ^1.1.4
     version: 1.1.4(@typescript-eslint/parser@7.9.0)(eslint@9.3.0)(typescript@5.4.5)
@@ -417,6 +423,16 @@ packages:
       graphql: 16.8.1
     dev: false
 
+  /@pothos/plugin-simple-objects@3.7.0(@pothos/core@3.41.1)(graphql@16.8.1):
+    resolution: {integrity: sha512-CgZJLaHLt1Q30j+XCiWV6qVJcae1ksiUFdi8kz4sEsOhCNfdVwz64s8rx7SSqsdmPbjb68dJIDKpq2Qg9VZb8g==}
+    peerDependencies:
+      '@pothos/core': '*'
+      graphql: '>=15.1.0'
+    dependencies:
+      '@pothos/core': 3.41.1(graphql@16.8.1)
+      graphql: 16.8.1
+    dev: false
+
   /@prisma/client@5.14.0(prisma@5.14.0):
     resolution: {integrity: sha512-akMSuyvLKeoU4LeyBAUdThP/uhVP3GuLygFE3MlYzaCb3/J8SfsYBE5PkaFuLuVpLyA6sFoW+16z/aPhNAESqg==}
     engines: {node: '>=16.13'}
@@ -653,7 +669,7 @@ packages:
 
   /@types/uuid@9.0.8:
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
-    dev: false
+    dev: true
 
   /@typescript-eslint/parser@7.9.0(eslint@9.3.0)(typescript@5.4.5):
     resolution: {integrity: sha512-qHMJfkL5qvgQB2aLvhUSXxbK7OLnDkwPzFalg458pxQgfxKDfT1ZDbHQM/I6mDIf/svlMkj21kzKuQ2ixJlatQ==}

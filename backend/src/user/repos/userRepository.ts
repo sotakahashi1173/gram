@@ -33,11 +33,12 @@ interface UserData {
 export const saveUser =
   ({ prisma }: Context) =>
   (model: User): ResultAsync<UserData, Error> => {
-    const { ...user } = model;
+    const { id, name } = model;
     return ResultAsync.fromPromise(
       prisma.user.create({
-        data: { ...user },
+        // FIXME: UserIdを使うように修正する
+        data: { name },
       }),
-      () => new Error("Failed to save user.")
+      () => new Error("Failed to save user on MongoDB.")
     );
   };
