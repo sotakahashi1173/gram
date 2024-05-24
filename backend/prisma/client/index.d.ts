@@ -5129,7 +5129,7 @@ export namespace Prisma {
   }
 
   export type PostCreateInput = {
-    id?: string
+    id: string
     slug: string
     title: string
     body: string
@@ -5138,7 +5138,7 @@ export namespace Prisma {
   }
 
   export type PostUncheckedCreateInput = {
-    id?: string
+    id: string
     slug: string
     title: string
     body: string
@@ -5163,7 +5163,7 @@ export namespace Prisma {
   }
 
   export type PostCreateManyInput = {
-    id?: string
+    id: string
     slug: string
     title: string
     body: string
@@ -5185,12 +5185,12 @@ export namespace Prisma {
   }
 
   export type UserCreateInput = {
-    id?: string
+    id: string
     name: string
   }
 
   export type UserUncheckedCreateInput = {
-    id?: string
+    id: string
     name: string
   }
 
@@ -5203,7 +5203,7 @@ export namespace Prisma {
   }
 
   export type UserCreateManyInput = {
-    id?: string
+    id: string
     name: string
   }
 
@@ -5216,14 +5216,14 @@ export namespace Prisma {
   }
 
   export type CommentCreateInput = {
-    id?: string
+    id: string
     comment: string
     postId: string
     userId: string
   }
 
   export type CommentUncheckedCreateInput = {
-    id?: string
+    id: string
     comment: string
     postId: string
     userId: string
@@ -5242,7 +5242,7 @@ export namespace Prisma {
   }
 
   export type CommentCreateManyInput = {
-    id?: string
+    id: string
     comment: string
     postId: string
     userId: string
@@ -5261,14 +5261,14 @@ export namespace Prisma {
   }
 
   export type PhotoCreateInput = {
-    id?: string
+    id: string
     url: string
     userId?: string | null
     post: PostCreateNestedOneWithoutPhotoInput
   }
 
   export type PhotoUncheckedCreateInput = {
-    id?: string
+    id: string
     url: string
     postId: string
     userId?: string | null
@@ -5287,7 +5287,7 @@ export namespace Prisma {
   }
 
   export type PhotoCreateManyInput = {
-    id?: string
+    id: string
     url: string
     postId: string
     userId?: string | null
@@ -5621,13 +5621,13 @@ export namespace Prisma {
   }
 
   export type PhotoCreateWithoutPostInput = {
-    id?: string
+    id: string
     url: string
     userId?: string | null
   }
 
   export type PhotoUncheckedCreateWithoutPostInput = {
-    id?: string
+    id: string
     url: string
     userId?: string | null
   }
@@ -5668,7 +5668,7 @@ export namespace Prisma {
   }
 
   export type PostCreateWithoutPhotoInput = {
-    id?: string
+    id: string
     slug: string
     title: string
     body: string
@@ -5676,7 +5676,7 @@ export namespace Prisma {
   }
 
   export type PostUncheckedCreateWithoutPhotoInput = {
-    id?: string
+    id: string
     slug: string
     title: string
     body: string
@@ -5714,7 +5714,7 @@ export namespace Prisma {
   }
 
   export type PhotoCreateManyPostInput = {
-    id?: string
+    id: string
     url: string
     userId?: string | null
   }

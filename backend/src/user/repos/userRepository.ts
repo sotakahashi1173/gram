@@ -36,8 +36,7 @@ export const saveUser =
     const { id, name } = model;
     return ResultAsync.fromPromise(
       prisma.user.create({
-        // FIXME: UserIdを使うように修正する
-        data: { name },
+        data: { id, name },
       }),
       () => new Error("Failed to save user on MongoDB.")
     );
