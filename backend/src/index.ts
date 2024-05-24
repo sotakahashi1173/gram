@@ -1,12 +1,13 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { prisma } from "./infra/documentDB";
+import { builder } from "./schema";
 
 const app = express();
 const PORT = 3000;
 
 const server = new ApolloServer({
-  resolvers,
+  schema: builder.toSchema(),
   context: ({ req }) => ({
     ...req,
     prisma,

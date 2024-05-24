@@ -5,8 +5,6 @@ import { prisma } from "./infra/documentDB";
 import { createUserWorkflow } from "./user/workflow/createUser";
 import { saveUser } from "./user/repos/userRepository";
 import { UnvalidatedUser } from "./user/objects/user";
-import { error } from "console";
-import { okAsync } from "neverthrow";
 
 export const builder = new SchemaBuilder<{
   Context: Context;
@@ -17,13 +15,36 @@ export const builder = new SchemaBuilder<{
   },
 });
 
-const CreateUserInput = builder.inputType("CreateUser", {
+const CreateUserInput = builder.inputType("InputUser", {
   fields: (t) => ({
     name: t.string({ required: true }),
   }),
 });
 const CreateUser = builder.objectRef<{ name: string }>("CreateUser");
 
+CreateUser.implement({
+  fields: (t) => ({
+    name: t.exposeString("name"),
+  }),
+});
+
+builder.queryType({
+  fields: (t) => ({
+    hello: t.string({
+      resolve: () => "hello, world!",
+    }),
+    createUser: t.field({
+      type: [CreateUser],
+      resolve: () => [
+        {
+          name: "James",
+        },
+      ],
+    }),
+  }),
+});
+
+builder.mutationType({});
 builder.mutationField("createUser", (t) =>
   t.field({
     type: CreateUser,
@@ -42,7 +63,7 @@ builder.mutationField("createUser", (t) =>
       return result.match(
         (user) => ({ name: user.name }),
         (error) => {
-          throw new Error();
+          throw error;
         }
       );
     },
