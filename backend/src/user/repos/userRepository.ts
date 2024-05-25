@@ -1,29 +1,37 @@
 import { ResultAsync, ok } from "neverthrow";
 import { Context } from "../../context";
-import { UserId } from "../objects/userId";
 import { ValidationError } from "apollo-server-express";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { CreatedUser, User } from "../objects/user";
+import { User } from "../objects/user";
 
-export const getByUserId =
+export const getUsers =
   ({ prisma }: Context) =>
-  (
-    userId: UserId
-  ): ResultAsync<
-    User | null,
+  (): ResultAsync<
+    User[],
     ValidationError | PrismaClientKnownRequestError | Error
   > =>
     ResultAsync.fromPromise(
-      prisma.user.findUnique({
-        where: { id: userId },
-      }),
-      // TODO: 共通化し関数化する
+      prisma.user.findMany(),
       () =>
         new PrismaClientKnownRequestError("Error", {
           code: "",
           clientVersion: "",
         })
-    ).andThen((user) => (user ? User(user) : ok(null)));
+    ).andThen((users) => {
+      const usersList: User[] = [];
+      for (const user of users) {
+        const exportUser = User(user);
+        usersList.push(
+          exportUser.match(
+            (user) => user,
+            (error) => {
+              throw error;
+            }
+          )
+        );
+      }
+      return ok(usersList);
+    });
 
 interface UserData {
   id: string;
