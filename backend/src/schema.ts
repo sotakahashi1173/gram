@@ -3,7 +3,7 @@ import PrismaPlugin from "@pothos/plugin-prisma";
 import { Context } from "./context";
 import { prisma } from "./infra/documentDB";
 import { createUserWorkflow } from "./user/workflow/createUser";
-import { saveUser } from "./user/repos/userRepository";
+import { getUsers, saveUser } from "./user/repos/userRepository";
 import { UnvalidatedUser } from "./user/objects/user";
 
 export const builder = new SchemaBuilder<{
@@ -21,9 +21,16 @@ const CreateUserInput = builder.inputType("InputUser", {
   }),
 });
 const CreateUser = builder.objectRef<{ name: string }>("CreateUser");
+const User = builder.objectRef<{ id: string; name: string }>("User");
 
 CreateUser.implement({
   fields: (t) => ({
+    name: t.exposeString("name"),
+  }),
+});
+User.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
     name: t.exposeString("name"),
   }),
 });
@@ -41,8 +48,35 @@ builder.queryType({
         },
       ],
     }),
+    user: t.field({
+      type: User,
+      resolve: () => ({
+        id: "1",
+        name: "James",
+      }),
+    }),
   }),
 });
+
+builder.queryField("Users", (t) =>
+  t.field({
+    type: [User],
+    resolve: (_root, _, context) => {
+      const result = getUsers(context)();
+      return result.match(
+        (users) => {
+          return users.map((user) => ({
+            id: user.id!,
+            name: user.name,
+          }));
+        },
+        (error) => {
+          throw error;
+        }
+      );
+    },
+  })
+);
 
 builder.mutationType({});
 builder.mutationField("createUser", (t) =>

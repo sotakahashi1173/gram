@@ -37,7 +37,7 @@ export interface CreatedUser {
  */
 export interface SavedUser {
   kind: "Saved";
-  id: UserId;
+  id: string;
   name: string;
 }
 
@@ -54,10 +54,8 @@ export const User = (
   const userId = userData.id ? UserId(userData.id) : UserId(createId());
   const name = UserName(userData.name);
   const values = Result.combine(tuple(userId, name));
-  return values.map(([id, name]) => ({
+  return values.map(() => ({
     ...userData,
     kind: "Saved",
-    id,
-    name,
   }));
 };
