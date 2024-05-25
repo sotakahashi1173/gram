@@ -1,6 +1,6 @@
 import { ResultAsync, ok } from "neverthrow";
 import { Context } from "../../context";
-import { ValidationError } from "apollo-server-express";
+import { ValidationError } from "../../err";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { User } from "../objects/user";
 

@@ -1,27 +1,22 @@
-import express from "express";
-import { ApolloServer } from "apollo-server-express";
+import { builder, schema } from "./schema";
+import { createServer } from "node:http";
+import { createYoga } from "graphql-yoga";
 import { prisma } from "./infra/documentDB";
-import { builder } from "./schema";
 
-const app = express();
-const PORT = 3000;
-
-const server = new ApolloServer({
+const yoga = createYoga({
   schema: builder.toSchema(),
-  context: ({ req }) => ({
+  context: (req) => ({
     ...req,
     prisma,
   }),
 });
 
-(async () => {
-  await server.start();
-  server.applyMiddleware({ app });
+const server = createServer(yoga);
 
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    console.log(
-      `GraphQL Playground available at http://localhost:${PORT}${server.graphqlPath}`
-    );
-  });
-})();
+const port = process.env.PORT || "3000";
+
+server.listen(port, () => {
+  console.info(
+    `Server is running on http://localhost:${port}${yoga.graphqlEndpoint}`
+  );
+});

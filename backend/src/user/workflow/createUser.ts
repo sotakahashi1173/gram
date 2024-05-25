@@ -5,7 +5,7 @@ import {
   User,
   ValidatedUser,
 } from "../objects/user";
-import { ValidationError } from "apollo-server-express";
+import { ValidationError } from "../../err";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { UserName } from "../objects/name";
 import { UserId } from "../objects/userId";

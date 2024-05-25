@@ -15,6 +15,8 @@ export const builder = new SchemaBuilder<{
   },
 });
 
+export const schema = builder.toSchema();
+
 const CreateUserInput = builder.inputType("InputUser", {
   fields: (t) => ({
     name: t.string({ required: true }),
