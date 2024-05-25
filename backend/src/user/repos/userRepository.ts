@@ -42,6 +42,7 @@ export const saveUser =
   ({ prisma }: Context) =>
   (model: User): ResultAsync<UserData, Error> => {
     const { id, name } = model;
+    console.log("name", name, id);
     return ResultAsync.fromPromise(
       prisma.user.create({
         data: { id, name },
