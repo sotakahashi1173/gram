@@ -30,6 +30,7 @@ CreateUser.implement({
     name: t.exposeString("name"),
   }),
 });
+
 User.implement({
   fields: (t) => ({
     id: t.exposeString("id"),
