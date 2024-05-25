@@ -1,6 +1,6 @@
-import { Result, ok } from "neverthrow";
+import { Result } from "neverthrow";
 import { UserId } from "./userId";
-import { ValidationError } from "apollo-server-express";
+import { ValidationError } from "../../err";
 import { UserName } from "./name";
 import { tuple } from "../../common/tuple";
 import { createId } from "../../common/uuid";

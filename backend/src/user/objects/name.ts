@@ -1,5 +1,5 @@
 import { Result, ok, err } from "neverthrow";
-import { ValidationError } from "apollo-server-express";
+import { ValidationError } from "../../err";
 
 /**
  * ユーザー名
