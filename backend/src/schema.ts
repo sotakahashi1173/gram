@@ -106,3 +106,7 @@ builder.mutationField("createUser", (t) =>
     },
   })
 );
+
+type CreateUserInput = typeof CreateUserInput.$inferInput;
+type CreateUser = typeof CreateUser.$inferType;
+type User = typeof User.$inferType;
