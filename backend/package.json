@@ -7,7 +7,9 @@
     "start": "ts-node src/index.ts",
     "build": "tsc",
     "serve": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "graphql-codegen",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,8 +26,8 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/client-preset": "^4.2.6",
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "4.2.6",
     "@graphql-codegen/schema-ast": "^4.0.2",
     "@types/graphql": "^14.5.0",
     "@types/node": "^20.12.12",
@@ -33,6 +35,8 @@
     "eslint-plugin-neverthrow": "^1.1.4",
     "prisma": "^5.14.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@graphql-codegen/typescript": "4.0.7",
+    "@graphql-codegen/typescript-resolvers": "4.1.0"
   }
 }
