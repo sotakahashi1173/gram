@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable */
 import { GraphQLResolveInfo } from "graphql";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -172,24 +171,24 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
   CreateUser: ResolverTypeWrapper<CreateUser>;
+  String: ResolverTypeWrapper<Scalars["String"]["output"]>;
   InputUser: InputUser;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars["String"]["output"]>;
   User: ResolverTypeWrapper<User>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Boolean: Scalars["Boolean"]["output"];
   CreateUser: CreateUser;
+  String: Scalars["String"]["output"];
   InputUser: InputUser;
   Mutation: {};
   Query: {};
-  String: Scalars["String"]["output"];
   User: User;
+  Boolean: Scalars["Boolean"]["output"];
 };
 
 export type CreateUserResolvers<
