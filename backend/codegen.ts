@@ -9,7 +9,7 @@ const config: CodegenConfig = {
   generates: {
     "../frontend/graphql/generated/": {
       preset: "client",
-      plugins: ["typescript", "typescript-resolvers"],
+      plugins: [],
     },
     "schema.graphql": {
       plugins: ["schema-ast"],
