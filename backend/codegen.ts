@@ -5,9 +5,14 @@ import { builder } from "./src/schema";
 const config: CodegenConfig = {
   overwrite: true,
   schema: printSchema(builder.toSchema({})),
+  ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    "../frontend/graphql/generated/graphql.ts": {
+    "../frontend/graphql/generated/": {
+      preset: "client",
       plugins: ["typescript", "typescript-resolvers"],
+    },
+    "schema.graphql": {
+      plugins: ["schema-ast"],
     },
   },
 };
