@@ -1,38 +1,29 @@
-import { request, gql } from "graphql-request";
-import { useQuery } from "@tanstack/react-query";
+import { GraphQLClient } from "graphql-request";
+import { graphql } from "./gql/";
 import { User } from "./gql/graphql";
+import { UsersQuery } from "./gql/graphql";
 
-interface UserQuery {
-  users: {
-    id: string;
-    name: string;
-  }[];
+const usersDocument = graphql(
+  `
+    query GetUser($id: ID!) {
+      user(id: $id) {
+        name
+      }
+    }
+  `
+);
+
+const client = new GraphQLClient("http://localhost:3000/graphql");
+
+async function fetchUsers(id: string): Promise<UsersQuery["user"]> {
+  const { users } = await client.request<UsersQuery>(usersDocument);
+  return users;
 }
 
-const usersDocument = gql`
-  query Users {
-    users {
-      id
-      name
-    }
-  }
-`;
-
-function App() {
-  const { data } = useQuery<UserQuery>({
-    queryKey: ["users"],
-    queryFn: async () =>
-      request(
-        "http://localhost:3000/graphql",
-        usersDocument,
-        // variables are type-checked too!
-        { first: 10 }
-      ),
-  });
-
+async function App() {
   return (
     <div>
-      {data?.users.map((user: User) => (
+      {users.map((user: User) => (
         <div key={user.id}>{user.name}</div>
       ))}
     </div>
