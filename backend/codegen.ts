@@ -7,12 +7,15 @@ const config: CodegenConfig = {
   schema: printSchema(builder.toSchema({})),
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    "../frontend/graphql/generated/": {
-      preset: "client",
-      plugins: [],
-    },
     "schema.graphql": {
       plugins: ["schema-ast"],
+    },
+    "../frontend/src/gql/": {
+      preset: "client",
+      config: {
+        documentMode: "string",
+      },
+      plugins: ["typescript", "typescript-operations"],
     },
   },
 };
