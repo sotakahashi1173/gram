@@ -5,6 +5,8 @@ import { prisma } from "./infra/documentDB";
 import { createUserWorkflow } from "./user/workflow/createUser";
 import { getUsers, saveUser } from "./user/repos/userRepository";
 import { UnvalidatedUser } from "./user/objects/user";
+import { writeFileSync } from "fs";
+import { printSchema, lexicographicSortSchema } from "graphql";
 
 export const builder = new SchemaBuilder<{
   Context: Context;
@@ -110,3 +112,6 @@ builder.mutationField("createUser", (t) =>
 type CreateUserInput = typeof CreateUserInput.$inferInput;
 type CreateUser = typeof CreateUser.$inferType;
 type User = typeof User.$inferType;
+
+const schemaAsString = printSchema(lexicographicSortSchema(schema));
+writeFileSync("../schema.graphql", schemaAsString);

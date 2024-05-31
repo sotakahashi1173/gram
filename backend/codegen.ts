@@ -10,13 +10,6 @@ const config: CodegenConfig = {
     "schema.graphql": {
       plugins: ["schema-ast"],
     },
-    "../frontend/src/gql/": {
-      preset: "client",
-      config: {
-        documentMode: "string",
-      },
-      plugins: ["typescript", "typescript-operations"],
-    },
   },
 };
 
