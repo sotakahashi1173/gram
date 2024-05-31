@@ -1,32 +1,44 @@
-import { GraphQLClient } from "graphql-request";
-import { graphql } from "./gql/";
-import { User } from "./gql/graphql";
+import { request } from "graphql-request";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { graphql } from "./gql/gql";
 import { UsersQuery } from "./gql/graphql";
 
-const usersDocument = graphql(
-  `
-    query GetUser($id: ID!) {
-      user(id: $id) {
-        name
-      }
+const usersQueryDocument = graphql(`
+  query Users {
+    user {
+      id
+      name
     }
-  `
-);
+  }
+`);
 
-const client = new GraphQLClient("http://localhost:3000/graphql");
+const queryClient = new QueryClient();
 
-async function fetchUsers(id: string): Promise<UsersQuery["user"]> {
-  const { users } = await client.request<UsersQuery>(usersDocument);
-  return users;
+function Users() {
+  const { data } = useQuery<UsersQuery>({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const { user } = await request(
+        "http://localhost:3000/graphql",
+        usersQueryDocument
+      );
+      return { user }; // Fix: Wrap the user object in an object with the key "user"
+    },
+  });
+  return <div>{data && data.user.name}</div>;
 }
 
-async function App() {
+function App() {
+  const Hello = "Hello, world!";
   return (
-    <div>
-      {users.map((user: User) => (
-        <div key={user.id}>{user.name}</div>
-      ))}
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Users />
+      {Hello}
+    </QueryClientProvider>
   );
 }
 
