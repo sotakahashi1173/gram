@@ -18,15 +18,14 @@ interface ButtonProps {
    */
   radius?: string;
   /**
-   * ボタンのラベルを指定する
+   * ボタンをクリックした際の処理を指定する
    */
   onClick?: () => void;
 }
 
 /**
- * style指定する
+ * ボタンコンポーネント
  */
-
 export const Button = ({
   variant = "normal",
   size = "medium",
@@ -45,6 +44,7 @@ export const Button = ({
     height: size === "small" ? "32px" : size === "medium" ? "40px" : "48px",
     border: "none",
     fontSize: size === "small" ? "12px" : size === "medium" ? "14px" : "16px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     cursor: "pointer",
     "&:hover": {
       opacity: 0.8,
