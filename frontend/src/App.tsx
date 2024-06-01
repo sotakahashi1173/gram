@@ -1,10 +1,12 @@
-import { request } from "graphql-request";
+import { GraphQLClient, request } from "graphql-request";
 import {
   useQuery,
   QueryClient,
   QueryClientProvider,
+  useMutation,
 } from "@tanstack/react-query";
 import { graphql } from "./gql/gql";
+import { InputUser } from "./gql/graphql";
 import { UsersQuery } from "./gql/graphql";
 
 const usersQueryDocument = graphql(`
@@ -15,6 +17,29 @@ const usersQueryDocument = graphql(`
     }
   }
 `);
+
+const graphQlClient = new GraphQLClient("http://localhost:3000/graphql");
+
+const createUserQuery = graphql(`
+  mutation Mutation($input: InputUser!) {
+    createUser(input: $input) {
+      name
+    }
+  }
+`);
+
+export const useCreateUser = () => {
+  const mutationKey = ["graphql", "create", "input"];
+  return useMutation<InputUser, unknown, InputUser>({
+    mutationKey,
+    mutationFn: async (param) => {
+      const response = await graphQlClient.request(createUserQuery, {
+        input: param,
+      });
+      return response.createUser;
+    },
+  });
+};
 
 const queryClient = new QueryClient();
 
