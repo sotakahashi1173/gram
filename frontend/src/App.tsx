@@ -9,7 +9,7 @@ import { UsersQuery } from "./gql/graphql";
 
 const usersQueryDocument = graphql(`
   query Users {
-    user {
+    Users {
       id
       name
     }
@@ -20,24 +20,26 @@ const queryClient = new QueryClient();
 
 function Users() {
   const { data } = useQuery<UsersQuery>({
-    queryKey: ["users"],
+    queryKey: ["Users"],
     queryFn: async () => {
-      const { user } = await request(
+      const { Users } = await request(
         "http://localhost:3000/graphql",
         usersQueryDocument
       );
-      return { user }; // Fix: Wrap the user object in an object with the key "user"
+      return { Users }; // Fix: Wrap the user object in an object with the key "Users"
     },
   });
-  return <div>{data && data.user.name}</div>;
+  return (
+    <div>
+      {data && data.Users.map((user) => <div key={user.id}>{user.name}</div>)}
+    </div>
+  );
 }
 
 function App() {
-  const Hello = "Hello, world!";
   return (
     <QueryClientProvider client={queryClient}>
       <Users />
-      {Hello}
     </QueryClientProvider>
   );
 }
