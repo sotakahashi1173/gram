@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query Users {\n    Users {\n      id\n      name\n    }\n  }\n": types.UsersDocument,
+    "\n  mutation Mutation($input: InputUser!) {\n    createUser(input: $input) {\n      name\n    }\n  }\n": types.MutationDocument,
 };
 
 /**
@@ -34,6 +35,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query Users {\n    Users {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query Users {\n    Users {\n      id\n      name\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation Mutation($input: InputUser!) {\n    createUser(input: $input) {\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation Mutation($input: InputUser!) {\n    createUser(input: $input) {\n      name\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
