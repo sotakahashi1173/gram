@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Input } from "./index";
+import Input from "./index";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -23,5 +23,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: "ラベル",
+    value: "",
+    onChange: (e) => {
+      console.log(e.target.value);
+    },
   },
 };

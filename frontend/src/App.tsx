@@ -8,6 +8,8 @@ import {
 import { graphql } from "./gql/gql";
 import { InputUser } from "./gql/graphql";
 import { UsersQuery } from "./gql/graphql";
+import { useState, useCallback } from "react";
+import Input from "./components/parts/Input";
 
 const usersQueryDocument = graphql(`
   query Users {
@@ -43,7 +45,12 @@ export const useCreateUser = () => {
 
 const queryClient = new QueryClient();
 
-function Users() {
+const Users = () => {
+  const [inputValue, setInputValue] = useState<string>("");
+  const handleInputChange = useCallback((value: string) => {
+    setInputValue(value);
+  }, []);
+
   const { data } = useQuery<UsersQuery>({
     queryKey: ["Users"],
     queryFn: async () => {
@@ -57,9 +64,15 @@ function Users() {
   return (
     <div>
       {data && data.Users.map((user) => <div key={user.id}>{user.name}</div>)}
+      <Input
+        value={inputValue}
+        label="User Name"
+        onChange={handleInputChange}
+      />
+      {inputValue}
     </div>
   );
-}
+};
 
 function App() {
   return (
