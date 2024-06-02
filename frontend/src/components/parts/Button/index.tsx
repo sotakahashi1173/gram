@@ -26,15 +26,24 @@ interface ButtonProps {
 /**
  * ボタンコンポーネント
  */
-export const Button = ({
+const Button = ({
   variant = "normal",
   size = "medium",
   label = "Button",
   radius = "4px",
   ...props
 }: ButtonProps) => {
-  //styleを指定する
-  const ButtonStyle = styled.button({
+  const ButtonStyle = getButtonStyle(variant, size, radius);
+  return (
+    <ButtonStyle type="button" {...props}>
+      {label}
+    </ButtonStyle>
+  );
+};
+
+//styleを指定する
+const getButtonStyle = (variant: string, size: string, radius: string) =>
+  styled.button({
     padding: "8px 16px",
     fontWeight: 500,
     color: variant === "primary" ? "#fff" : "#000",
@@ -53,9 +62,5 @@ export const Button = ({
       opacity: 0.6,
     },
   });
-  return (
-    <ButtonStyle type="button" {...props}>
-      {label}
-    </ButtonStyle>
-  );
-};
+
+export default Button;
