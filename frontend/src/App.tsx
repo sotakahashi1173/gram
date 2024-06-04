@@ -7,7 +7,7 @@ import {
 import { graphql } from "./gql/gql";
 import { InputUser } from "./gql/graphql";
 import UsersList from "./components/User/List";
-import User from "./components/User";
+import User from "./components/User/Register";
 
 const graphQlClient = new GraphQLClient("http://localhost:3000/graphql");
 
