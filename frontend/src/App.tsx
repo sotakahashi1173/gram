@@ -29,6 +29,9 @@ export const useCreateUser = () => {
       });
       return response.createUser;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["Users"] });
+    },
   });
 };
 
