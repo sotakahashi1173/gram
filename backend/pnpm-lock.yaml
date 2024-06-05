@@ -20,6 +20,9 @@ dependencies:
   '@prisma/client':
     specifier: ^5.14.0
     version: 5.14.0(prisma@5.14.0)
+  '@whatwg-node/server-plugin-cookies':
+    specifier: ^1.0.2
+    version: 1.0.2(@whatwg-node/server@0.9.34)
   graphql:
     specifier: ^16.8.1
     version: 16.8.1
@@ -1702,6 +1705,13 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
+  /@whatwg-node/cookie-store@0.2.2:
+    resolution: {integrity: sha512-poI6G6rYGsXNA+JTZLU+IUUXb+Xsau8M3GrcbF3VJdbvW6QGpbuvC+gvN4rD9zJAnqM0jpDKDhIWf2DmEAmWFQ==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      tslib: 2.6.2
+    dev: false
+
   /@whatwg-node/events@0.0.3:
     resolution: {integrity: sha512-IqnKIDWfXBJkvy/k6tzskWTc2NK3LcqHlb+KHGCrjOCH4jfQckRX0NAiIcC/vIqQkzLYw2r2CTSwAxcrtcD6lA==}
     dev: true
@@ -1746,6 +1756,17 @@ packages:
       busboy: 1.6.0
       fast-querystring: 1.1.2
       tslib: 2.6.2
+
+  /@whatwg-node/server-plugin-cookies@1.0.2(@whatwg-node/server@0.9.34):
+    resolution: {integrity: sha512-l5ramNKf3aGCybZcN+bVNrTtUJwuB3PRQSjvvn9oh1CnBEMcrucatELRrSAWL/wZcXcJNF8NHB8G0UPEXkDzkw==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      '@whatwg-node/server': ^0.9.0
+    dependencies:
+      '@whatwg-node/cookie-store': 0.2.2
+      '@whatwg-node/server': 0.9.34
+      tslib: 2.6.2
+    dev: false
 
   /@whatwg-node/server@0.9.34:
     resolution: {integrity: sha512-1sHRjqUtZIyTR2m2dS/dJpzS5OcNDpPuUSVDa2PoEgzYVKr4GsqJaYtRaEXXFohvvyh6PkouYCc1rE7jMDWVCA==}

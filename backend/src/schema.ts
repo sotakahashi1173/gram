@@ -7,11 +7,12 @@ import { getUsers, saveUser } from "./user/repos/userRepository";
 import { UnvalidatedUser } from "./user/objects/user";
 import { writeFileSync } from "fs";
 import { printSchema, lexicographicSortSchema } from "graphql";
+import PothosSimpleObjectsPlugin from "@pothos/plugin-simple-objects";
 
 export const builder = new SchemaBuilder<{
   Context: Context;
 }>({
-  plugins: [PrismaPlugin],
+  plugins: [PrismaPlugin, PothosSimpleObjectsPlugin],
   prisma: {
     client: prisma,
   },
@@ -30,6 +31,12 @@ const User = builder.objectRef<{ id: string; name: string }>("User");
 CreateUser.implement({
   fields: (t) => ({
     name: t.exposeString("name"),
+  }),
+});
+
+const LoginType = builder.simpleObject("Login", {
+  fields: (t) => ({
+    token: t.string({ nullable: false }),
   }),
 });
 
@@ -84,6 +91,36 @@ builder.queryField("Users", (t) =>
 );
 
 builder.mutationType({});
+
+builder.mutationFields((t) => ({
+  login: t.field({
+    type: LoginType,
+    args: {
+      email: t.arg.string({ required: true, description: "メールアドレス" }),
+      password: t.arg.string({ required: true, description: "パスワード" }),
+    },
+    resolve: async (_, args, context) => {
+      const userWithPassword = await prisma.user.findUnique({
+        where: { email: args.email },
+        include: { password: true },
+      });
+      if (!userWithPassword || !userWithPassword.password) {
+        throw new Error("Failed login");
+      }
+      const isVerifiedPassword = await verifyPassword({
+        rawPassword: args.password,
+        hashedPassword: userWithPassword.password.hashed,
+      });
+      if (!isVerifiedPassword) {
+        throw new Error("Failed login");
+      }
+      const token = jwtSign(userWithPassword.id);
+      await context.request.cookieStore?.set(CookieKeys.authToken, token);
+      return { token };
+    },
+  }),
+}));
+
 builder.mutationField("createUser", (t) =>
   t.field({
     type: CreateUser,
