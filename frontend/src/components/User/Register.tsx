@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useCreateUser } from "@/App";
+import { useCreateUser } from "@/gql/User";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import {
