@@ -12,10 +12,15 @@ import PothosSimpleObjectsPlugin from "@pothos/plugin-simple-objects";
 export const builder = new SchemaBuilder<{
   Context: Context;
 }>({
-  plugins: [PrismaPlugin, PothosSimpleObjectsPlugin],
+  plugins: [PrismaPlugin, PothosSimpleObjectsPlugin, ReplayPlugin],
   prisma: {
     client: prisma,
   },
+  authScopes: async (ctx: Context) => ({
+    loggedIn: !!ctx.user,
+    admin: ctx.user?.role === "ADMIN",
+    member: ctx.user?.role === "MEMBER",
+  }),
 });
 
 export const schema = builder.toSchema();
