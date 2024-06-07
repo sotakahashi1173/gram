@@ -122,7 +122,9 @@ exports.Prisma.PostScalarFieldEnum = {
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  email: 'email',
+  password: 'password'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {

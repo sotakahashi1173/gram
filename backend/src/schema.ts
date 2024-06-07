@@ -1,5 +1,7 @@
 import SchemaBuilder from "@pothos/core";
 import PrismaPlugin from "@pothos/plugin-prisma";
+import PothosRelayPlugin from "@pothos/plugin-relay";
+import ScopeAuthPlugin from "@pothos/plugin-scope-auth";
 import { Context } from "./context";
 import { prisma } from "./infra/documentDB";
 import { createUserWorkflow } from "./user/workflow/createUser";
@@ -10,9 +12,19 @@ import { printSchema, lexicographicSortSchema } from "graphql";
 import PothosSimpleObjectsPlugin from "@pothos/plugin-simple-objects";
 
 export const builder = new SchemaBuilder<{
+  AurhScopes: {
+    loggedIn: boolean;
+    admin: boolean;
+    member: boolean;
+  };
   Context: Context;
 }>({
-  plugins: [PrismaPlugin, PothosSimpleObjectsPlugin, ReplayPlugin],
+  plugins: [
+    PrismaPlugin,
+    PothosSimpleObjectsPlugin,
+    ScopeAuthPlugin,
+    PothosRelayPlugin,
+  ],
   prisma: {
     client: prisma,
   },
@@ -21,6 +33,7 @@ export const builder = new SchemaBuilder<{
     admin: ctx.user?.role === "ADMIN",
     member: ctx.user?.role === "MEMBER",
   }),
+  relayOptions: {},
 });
 
 export const schema = builder.toSchema();

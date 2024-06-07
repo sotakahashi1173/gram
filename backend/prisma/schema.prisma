@@ -35,6 +35,8 @@ model Post {
 model User {
   id   String  @id @map("_id") 
   name String
+  email String
+  password String
 }
 
 model Comment {
