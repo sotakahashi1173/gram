@@ -10,6 +10,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { UserName } from "../objects/name";
 import { UserId } from "../objects/userId";
 import { UserRole } from "../objects/role";
+import { tuple } from "../../common/tuple";
 
 type Workflow = (
   model: UnvalidatedUser
@@ -23,12 +24,14 @@ type ValidateUser = (
 ) => Result<ValidatedUser, ValidationError>;
 
 const validateUser: ValidateUser = (model) => {
-  const value = UserName(model.name);
+  const name = UserName(model.name);
   const role = UserRole(model.role);
-  return value.map((name) => ({
+  const values = Result.combine(tuple(name, role));
+  return values.map(([name, role]) => ({
     ...model,
     kind: "Validated",
     name,
+    role,
   }));
 };
 

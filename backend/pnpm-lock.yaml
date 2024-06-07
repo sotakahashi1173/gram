@@ -14,6 +14,9 @@ dependencies:
   '@pothos/plugin-relay':
     specifier: ^3.46.0
     version: 3.46.0(@pothos/core@3.41.1)(graphql@16.8.1)
+  '@pothos/plugin-scope-auth':
+    specifier: ^3.22.0
+    version: 3.22.0(@pothos/core@3.41.1)(graphql@16.8.1)
   '@pothos/plugin-simple-objects':
     specifier: ^3.7.0
     version: 3.7.0(@pothos/core@3.41.1)(graphql@16.8.1)
@@ -1515,6 +1518,16 @@ packages:
 
   /@pothos/plugin-relay@3.46.0(@pothos/core@3.41.1)(graphql@16.8.1):
     resolution: {integrity: sha512-EOmyqAsMy/vWgitPWcQRDUvLBcZF5M/RrFxoFeI/VWnRpUJPr8XmHh28jb70G8Wzfg56btPpTY440doSKb60og==}
+    peerDependencies:
+      '@pothos/core': '*'
+      graphql: '>=15.1.0'
+    dependencies:
+      '@pothos/core': 3.41.1(graphql@16.8.1)
+      graphql: 16.8.1
+    dev: false
+
+  /@pothos/plugin-scope-auth@3.22.0(@pothos/core@3.41.1)(graphql@16.8.1):
+    resolution: {integrity: sha512-iT+JT0uIvoVGuQeQ2Q/y+wwP27SQH+1Hs8Uz5rrtGOblsKGW0cRcJYuXMi5+XJFXOY3CPNMnv6aroetxZkEcEQ==}
     peerDependencies:
       '@pothos/core': '*'
       graphql: '>=15.1.0'

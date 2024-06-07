@@ -14,6 +14,8 @@ export interface UnvalidatedUser {
   id?: string;
   name: string;
   role: string;
+  email: string;
+  password: string;
 }
 
 /**
@@ -24,6 +26,7 @@ export interface ValidatedUser {
   id?: string;
   name: UserName;
   role: UserRole;
+  password: string;
 }
 
 /**
@@ -34,6 +37,7 @@ export interface CreatedUser {
   id: UserId;
   name: string;
   role: UserRole;
+  password: string;
 }
 
 /**
@@ -44,6 +48,7 @@ export interface SavedUser {
   id: string;
   name: string;
   role: UserRole;
+  password: string;
 }
 
 export type User = UnvalidatedUser | ValidatedUser | CreatedUser | SavedUser;
