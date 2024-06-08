@@ -11,6 +11,8 @@ import { UserName } from "../objects/name";
 import { UserId } from "../objects/userId";
 import { UserRole } from "../objects/role";
 import { tuple } from "../../common/tuple";
+import { Email } from "../objects/email";
+import { Password } from "../objects/password";
 
 type Workflow = (
   model: UnvalidatedUser
@@ -26,12 +28,17 @@ type ValidateUser = (
 const validateUser: ValidateUser = (model) => {
   const name = UserName(model.name);
   const role = UserRole(model.role);
-  const values = Result.combine(tuple(name, role));
-  return values.map(([name, role]) => ({
+  const email = Email(model.email);
+  const password = Password(model.password);
+
+  const values = Result.combine(tuple(name, role, email, password));
+  return values.map(([name, role, email, password]) => ({
     ...model,
     kind: "Validated",
     name,
     role,
+    email,
+    password,
   }));
 };
 

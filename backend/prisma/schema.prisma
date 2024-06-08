@@ -28,22 +28,28 @@ model Post {
   slug     String  @unique
   title    String
   body     String
-  authorId String  
+  userId   Int  @unique 
+  user     User    @relation(fields: [userId], references: [id])
   Photo    Photo[]
 }
 
 model User {
-  id   String  @id @map("_id") 
-  name String
-  email String
+  id       Int  @id @map("_id") 
+  name     String
+  role     String
+  email    String @unique
   password String
+  comment  Comment?
+  photo    Photo?
+  post     Post?
 }
 
 model Comment {
   id      String @id @map("_id")
   comment String
   postId  String 
-  userId  String 
+  userId  Int @unique
+  user    User   @relation(fields: [userId], references: [id])
 }
 
 model Photo {
@@ -51,5 +57,6 @@ model Photo {
   url    String
   postId String  
   post   Post    @relation(fields: [postId], references: [id])
-  userId String? 
+  userId Int  @unique 
+  user   User    @relation(fields: [userId], references: [id])
 }
