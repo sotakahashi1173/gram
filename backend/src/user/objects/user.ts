@@ -13,7 +13,6 @@ import { Password } from "./password";
 export interface UnvalidatedUser {
   kind: "Unvalidated";
   id?: number;
-  userId: number;
   name: string;
   role: string;
   email: string;
@@ -51,7 +50,7 @@ export interface SavedUser {
   kind: "Saved";
   id: number;
   name: string;
-  role: UserRole;
+  role: string;
   email: string;
   password: Password;
 }
