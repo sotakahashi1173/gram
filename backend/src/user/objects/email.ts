@@ -7,20 +7,36 @@ import { ValidationError } from "../../err";
 export type Email = string;
 
 /**
- * emialオブジェクト生成関数
+ * emailオブジェクト生成関数
  */
 export function Email(value: string): Result<Email, ValidationError> {
-  return validate(value)
+  const validResult = validateEmail(value);
+  return validResult.isValid
     ? ok(value as Email)
-    : err(new ValidationError("Invalid Email"));
+    : err(new ValidationError(validResult.error!));
+}
+
+interface ValidationResult {
+  isValid: boolean;
+  error?: string;
 }
 
 /**
  * emailのバリデーション
- * emialのフォーマットが正しければtrueを返す
+ * emailのフォーマットが正しければtrueを返す
  */
-const validate = (value: string): boolean => {
-  const atIndex = value.indexOf("@");
-  const dotIndex = value.lastIndexOf(".");
-  return atIndex > 0 && dotIndex > atIndex;
+export const validateEmail = (email: string): ValidationResult => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let error = undefined;
+
+  if (!email) {
+    error = "メールアドレスを入力してください。";
+  } else if (!emailRegex.test(email)) {
+    error = "無効なメールアドレス形式です。";
+  }
+
+  return {
+    isValid: error === undefined,
+    error: error,
+  };
 };
