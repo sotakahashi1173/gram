@@ -16,7 +16,10 @@ import { Password } from "../objects/password";
 
 type Workflow = (
   model: UnvalidatedUser
-) => Result<User, Error | ValidationError | PrismaClientKnownRequestError>;
+) => Result<
+  CreatedUser,
+  Error | ValidationError | PrismaClientKnownRequestError
+>;
 
 export const createUserWorkflow: Workflow = (model) =>
   ok(model).andThen(validateUser).andThen(createUser);
