@@ -1,4 +1,4 @@
-import { builder, schema } from "./schema";
+import { schema } from "./schema";
 import { createServer } from "node:http";
 
 import { createYoga } from "graphql-yoga";
@@ -12,7 +12,7 @@ const CookieKeys = {
 };
 
 const yoga = createYoga({
-  schema: builder.toSchema(),
+  schema: schema,
   plugins: [useCookies()],
   context: async (req) => {
     const authToken =
