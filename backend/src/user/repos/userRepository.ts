@@ -2,7 +2,7 @@ import { ResultAsync, ok } from "neverthrow";
 import { Context } from "../../context";
 import { ValidationError } from "../../err";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { User } from "../objects/user";
+import { CreatedUser, User } from "../objects/user";
 
 export const getUsers =
   ({ prisma }: Context) =>
@@ -34,17 +34,17 @@ export const getUsers =
     });
 
 interface UserData {
-  id: string;
+  id: number;
   name: string;
 }
 
 export const saveUser =
   ({ prisma }: Context) =>
-  (model: User): ResultAsync<UserData, Error> => {
-    const { id, name } = model;
+  (model: CreatedUser): ResultAsync<UserData, Error> => {
+    const { id, name, role, email, password } = model;
     return ResultAsync.fromPromise(
       prisma.user.create({
-        data: { id, name },
+        data: { id, name, role, email, password },
       }),
       () => new Error("Failed to save user on MongoDB.")
     );

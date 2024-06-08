@@ -11,9 +11,14 @@ export default interface PrismaTypes {
         Where: Prisma.PostWhereInput;
         Create: {};
         Update: {};
-        RelationName: "Photo";
+        RelationName: "user" | "Photo";
         ListRelations: "Photo";
         Relations: {
+            user: {
+                Shape: User;
+                Name: "User";
+                Nullable: false;
+            };
             Photo: {
                 Shape: Photo[];
                 Name: "Photo";
@@ -24,30 +29,52 @@ export default interface PrismaTypes {
     User: {
         Name: "User";
         Shape: User;
-        Include: never;
+        Include: Prisma.UserInclude;
         Select: Prisma.UserSelect;
         OrderBy: Prisma.UserOrderByWithRelationInput;
         WhereUnique: Prisma.UserWhereUniqueInput;
         Where: Prisma.UserWhereInput;
         Create: {};
         Update: {};
-        RelationName: never;
+        RelationName: "comment" | "photo" | "post";
         ListRelations: never;
-        Relations: {};
+        Relations: {
+            comment: {
+                Shape: Comment | null;
+                Name: "Comment";
+                Nullable: true;
+            };
+            photo: {
+                Shape: Photo | null;
+                Name: "Photo";
+                Nullable: true;
+            };
+            post: {
+                Shape: Post | null;
+                Name: "Post";
+                Nullable: true;
+            };
+        };
     };
     Comment: {
         Name: "Comment";
         Shape: Comment;
-        Include: never;
+        Include: Prisma.CommentInclude;
         Select: Prisma.CommentSelect;
         OrderBy: Prisma.CommentOrderByWithRelationInput;
         WhereUnique: Prisma.CommentWhereUniqueInput;
         Where: Prisma.CommentWhereInput;
         Create: {};
         Update: {};
-        RelationName: never;
+        RelationName: "user";
         ListRelations: never;
-        Relations: {};
+        Relations: {
+            user: {
+                Shape: User;
+                Name: "User";
+                Nullable: false;
+            };
+        };
     };
     Photo: {
         Name: "Photo";
@@ -59,12 +86,17 @@ export default interface PrismaTypes {
         Where: Prisma.PhotoWhereInput;
         Create: {};
         Update: {};
-        RelationName: "post";
+        RelationName: "post" | "user";
         ListRelations: never;
         Relations: {
             post: {
                 Shape: Post;
                 Name: "Post";
+                Nullable: false;
+            };
+            user: {
+                Shape: User;
+                Name: "User";
                 Nullable: false;
             };
         };

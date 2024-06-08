@@ -22,32 +22,39 @@ datasource db {
 }
 
 model Post {
-  id       String  @id @map("_id")
-  slug     String  @unique
-  title    String
-  body     String
-  authorId String
-  Photo    Photo[]
+  id     String  @id @map("_id")
+  slug   String  @unique
+  title  String
+  body   String
+  userId Int     @unique
+  user   User    @relation(fields: [userId], references: [id])
+  Photo  Photo[]
 }
 
 model User {
-  id       String @id @map("_id")
+  id       Int      @id @map("_id")
   name     String
-  email    String
+  role     String
+  email    String   @unique
   password String
+  comment  Comment?
+  photo    Photo?
+  post     Post?
 }
 
 model Comment {
   id      String @id @map("_id")
   comment String
   postId  String
-  userId  String
+  userId  Int    @unique
+  user    User   @relation(fields: [userId], references: [id])
 }
 
 model Photo {
-  id     String  @id @map("_id")
+  id     String @id @map("_id")
   url    String
   postId String
-  post   Post    @relation(fields: [postId], references: [id])
-  userId String?
+  post   Post   @relation(fields: [postId], references: [id])
+  userId Int    @unique
+  user   User   @relation(fields: [userId], references: [id])
 }
