@@ -2,6 +2,7 @@ import { builder } from "../../builder";
 import { UnvalidatedUser } from "../../../user/objects/user";
 import { createUserWorkflow } from "../../../user/workflow/createUser";
 import { saveUser } from "../../../user/repos/userRepository";
+import { prisma } from "../../../infra/documentDB";
 
 const CreateUserInput = builder.inputType("InputUser", {
   fields: (t) => ({
@@ -12,31 +13,25 @@ const CreateUserInput = builder.inputType("InputUser", {
   }),
 });
 
-const CreateUser = builder.objectRef<{ name: string }>("CreateUser");
+const CreateUser = builder.objectRef<{
+  id: number;
+  name: string;
+  role: string;
+  email: string;
+  password: string;
+}>("CreateUser");
 
 CreateUser.implement({
   fields: (t) => ({
+    id: t.exposeInt("id"),
     name: t.exposeString("name"),
+    role: t.exposeString("role"),
+    email: t.exposeString("email"),
+    password: t.exposeString("password"),
   }),
 });
 
-builder.queryType({
-  fields: (t) => ({
-    createUser: t.field({
-      type: [CreateUser],
-      resolve: () => [
-        {
-          name: "James",
-          role: "admin",
-          email: "test@example.com",
-          password: "password",
-        },
-      ],
-    }),
-  }),
-});
-
-builder.mutationField("createUser", (t) =>
+builder.mutationField("CreateUser", (t) =>
   t.field({
     type: CreateUser,
     args: {
@@ -56,7 +51,11 @@ builder.mutationField("createUser", (t) =>
       );
       return result.match(
         (user) => ({
+          id: user.id!,
           name: user.name,
+          role: user.role,
+          email: user.email,
+          password: user.password,
         }),
         (error) => {
           throw error;

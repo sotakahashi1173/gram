@@ -36,14 +36,17 @@ export const getUsers =
 interface UserData {
   id: number;
   name: string;
+  role: string;
+  email: string;
+  password: string;
 }
 
 export const saveUser =
-  ({ prisma }: Context) =>
+  (context: Context) =>
   (model: CreatedUser): ResultAsync<UserData, Error> => {
     const { id, name, role, email, password } = model;
     return ResultAsync.fromPromise(
-      prisma.user.create({
+      context.prisma.user.create({
         data: { id, name, role, email, password },
       }),
       () => new Error("Failed to save user on MongoDB.")

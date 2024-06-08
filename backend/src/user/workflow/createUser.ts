@@ -1,10 +1,5 @@
-import { Result, err, ok } from "neverthrow";
-import {
-  CreatedUser,
-  UnvalidatedUser,
-  User,
-  ValidatedUser,
-} from "../objects/user";
+import { Result, ok } from "neverthrow";
+import { CreatedUser, UnvalidatedUser, ValidatedUser } from "../objects/user";
 import { ValidationError } from "../../err";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { UserName } from "../objects/name";
