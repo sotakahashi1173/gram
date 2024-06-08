@@ -14,21 +14,6 @@ User.implement({
   }),
 });
 
-builder.queryType({
-  fields: (t) => ({
-    user: t.field({
-      type: User,
-      resolve: () => ({
-        id: 1,
-        name: "James",
-        role: "admin",
-        email: "test@example,com",
-        password: "password",
-      }),
-    }),
-  }),
-});
-
 builder.queryField("Users", (t) =>
   t.field({
     type: [User],

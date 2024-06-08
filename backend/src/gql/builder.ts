@@ -25,8 +25,10 @@ export const builder = new SchemaBuilder<{
   },
   authScopes: async (ctx: Context) => ({
     loggedIn: !!ctx.user,
-    admin: ctx.user?.role === "admin",
-    member: ctx.user?.role === "member",
+    admin: ctx.user?.role === "ADMIN",
+    member: ctx.user?.role === "MEMBER",
   }),
   relayOptions: {},
 });
+builder.queryType();
+builder.mutationType();

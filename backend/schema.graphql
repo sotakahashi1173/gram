@@ -1,23 +1,30 @@
 type CreateUser {
+  email: String!
+  id: Int!
   name: String!
+  password: String!
+  role: String!
 }
 
 input InputUser {
+  email: String!
   name: String!
+  password: String!
+  role: String!
 }
 
 type Mutation {
-  createUser(input: InputUser!): CreateUser!
+  CreateUser(input: InputUser!): CreateUser!
 }
 
 type Query {
   Users: [User!]!
-  createUser: [CreateUser!]!
-  hello: String!
-  user: User!
 }
 
 type User {
-  id: String!
+  email: String!
+  id: Int!
   name: String!
+  password: String!
+  role: String!
 }

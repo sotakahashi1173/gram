@@ -14,19 +14,20 @@ const CookieKeys = {
 const yoga = createYoga({
   schema: schema,
   plugins: [useCookies()],
-  context: async (req) => {
-    const authToken =
-      req.request.headers.get("Authorization")?.split(" ")?.[1] ||
-      (await req.request.cookieStore?.get(CookieKeys.authToken))?.value;
-    if (!authToken) {
-      return { ...req };
-    }
-    const auth = jwtVerify(authToken);
-    const user = await prisma.user.findUnique({
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      where: { id: parseID(auth.sub!) },
-    });
-    return { ...req, prisma, user };
+  context: async (ctx) => {
+    // const authToken =
+    //   ctx.request.headers.get("Authorization")?.split(" ")?.[1] ||
+    //   (await ctx.request.cookieStore?.get(CookieKeys.authToken))?.value;
+    // if (!authToken) {
+    //   return { ...ctx };
+    // }
+    // const auth = jwtVerify(authToken);
+    // const user = await prisma.user.findUnique({
+    //   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    //   where: { id: parseID(auth.sub!) },
+    // });
+    const user = undefined;
+    return { ...ctx, prisma, user };
   },
 });
 

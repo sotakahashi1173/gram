@@ -1,8 +1,5 @@
 import { builder } from "./gql/builder";
-import { writeFileSync } from "fs";
-import { printSchema, lexicographicSortSchema } from "graphql";
+import "./gql/schema/user/get";
+import "./gql/schema/user/post";
 
 export const schema = builder.toSchema();
-
-const schemaAsString = printSchema(lexicographicSortSchema(schema));
-writeFileSync("../schema.graphql", schemaAsString);
