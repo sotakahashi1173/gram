@@ -10,16 +10,22 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { type LoginForm, LoginSchema } from "./schema";
+import { type SignUpForm, SignUpSchema } from "./schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 
-// FIXME: ログインをSinUpに修正する
-const Login = () => {
-  const form = useForm<LoginForm>({
+const SignUp = () => {
+  const form = useForm<SignUpForm>({
     mode: "onBlur",
-    resolver: valibotResolver(LoginSchema),
+    resolver: valibotResolver(SignUpSchema),
+    defaultValues: {
+      email: "",
+      password: {
+        password: "",
+        passwordConfirm: "",
+      },
+    },
   });
-  const onSubmit = async (data: LoginForm) => {
+  const onSubmit = async (data: SignUpForm) => {
     try {
       const email = data.email;
       const password = data.password.password;
@@ -36,7 +42,13 @@ const Login = () => {
     } catch (err) {
       console.log(err);
     } finally {
-      form.reset();
+      form.reset({
+        email: data.email,
+        password: {
+          password: data.password.password,
+          passwordConfirm: "",
+        },
+      });
     }
   };
   return (
@@ -87,4 +99,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
