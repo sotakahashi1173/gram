@@ -6,13 +6,15 @@ const passwordPattern =
   /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d\W_]{8,32}$/;
 
 export const PasswordSchema = v.pipe(
+  v.string(),
+  v.nonEmpty("Please enter your password."),
+  v.minLength(8, "Your password must have 8 characters or more."),
+  v.regex(passwordPattern, "Your password is Invalid")
+);
+
+export const SignUpPasswordSchema = v.pipe(
   v.object({
-    password: v.pipe(
-      v.string(),
-      v.nonEmpty("Please enter your password."),
-      v.minLength(8, "Your password must have 8 characters or more."),
-      v.regex(passwordPattern, "Your password is Invalid")
-    ),
+    password: PasswordSchema,
     passwordConfirm: v.string(),
   }),
   v.forward(
@@ -24,9 +26,15 @@ export const PasswordSchema = v.pipe(
   )
 );
 
+export const SignUpSchema = v.object({
+  email: EmailSchema,
+  password: SignUpPasswordSchema,
+});
+
 export const LoginSchema = v.object({
   email: EmailSchema,
   password: PasswordSchema,
 });
 
+export type SignUpForm = v.InferInput<typeof SignUpSchema>;
 export type LoginForm = v.InferInput<typeof LoginSchema>;
