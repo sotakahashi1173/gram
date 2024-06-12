@@ -26,6 +26,14 @@ export const SignUpPasswordSchema = v.pipe(
   )
 );
 
+export const ResetPasswordSchema = v.object({
+  email: EmailSchema,
+});
+
+export const UpdatePasswordSchema = v.object({
+  password: PasswordSchema,
+});
+
 export const SignUpSchema = v.object({
   email: EmailSchema,
   password: SignUpPasswordSchema,
@@ -38,3 +46,5 @@ export const LoginSchema = v.object({
 
 export type SignUpForm = v.InferInput<typeof SignUpSchema>;
 export type LoginForm = v.InferInput<typeof LoginSchema>;
+export type ResetPasswordForm = v.InferInput<typeof ResetPasswordSchema>;
+export type UpdatePasswordForm = v.InferInput<typeof UpdatePasswordSchema>;
