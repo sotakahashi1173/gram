@@ -14,8 +14,9 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignUpImport } from './routes/signUp'
-import { Route as AuthenticatedImport } from './routes/_authenticated'
+import { Route as ResetPasswordIndexImport } from './routes/resetPassword/index'
 import { Route as LoginIndexImport } from './routes/login/index'
+import { Route as ResetPasswordForgetImport } from './routes/resetPassword/forget'
 
 // Create Virtual Routes
 
@@ -34,18 +35,23 @@ const SignUpRoute = SignUpImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedRoute = AuthenticatedImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const ResetPasswordIndexRoute = ResetPasswordIndexImport.update({
+  path: '/resetPassword/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const LoginIndexRoute = LoginIndexImport.update({
   path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ResetPasswordForgetRoute = ResetPasswordForgetImport.update({
+  path: '/resetPassword/forget',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -58,13 +64,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
     '/signUp': {
@@ -81,11 +80,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserLazyImport
       parentRoute: typeof rootRoute
     }
+    '/resetPassword/forget': {
+      id: '/resetPassword/forget'
+      path: '/resetPassword/forget'
+      fullPath: '/resetPassword/forget'
+      preLoaderRoute: typeof ResetPasswordForgetImport
+      parentRoute: typeof rootRoute
+    }
     '/login/': {
       id: '/login/'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/resetPassword/': {
+      id: '/resetPassword/'
+      path: '/resetPassword'
+      fullPath: '/resetPassword'
+      preLoaderRoute: typeof ResetPasswordIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -97,7 +110,9 @@ export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   SignUpRoute,
   UserLazyRoute,
+  ResetPasswordForgetRoute,
   LoginIndexRoute,
+  ResetPasswordIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -109,17 +124,15 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_authenticated",
         "/signUp",
         "/user",
-        "/login/"
+        "/resetPassword/forget",
+        "/login/",
+        "/resetPassword/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
-    },
-    "/_authenticated": {
-      "filePath": "_authenticated.tsx"
     },
     "/signUp": {
       "filePath": "signUp.tsx"
@@ -127,8 +140,14 @@ export const routeTree = rootRoute.addChildren({
     "/user": {
       "filePath": "user.lazy.tsx"
     },
+    "/resetPassword/forget": {
+      "filePath": "resetPassword/forget.tsx"
+    },
     "/login/": {
       "filePath": "login/index.tsx"
+    },
+    "/resetPassword/": {
+      "filePath": "resetPassword/index.tsx"
     }
   }
 }
